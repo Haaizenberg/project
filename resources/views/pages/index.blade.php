@@ -7,6 +7,7 @@
         <title>Project</title>
     </head>
     <body >
-        
+        <p>Уже создано {{ $createdBoxesCount }} коробок.</p>
+        <a href="/boxes">Boxes</a>
     </body>
 </html>

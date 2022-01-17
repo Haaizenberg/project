@@ -1,43 +1,19 @@
 <?php
 
+use App\Http\Controllers\BoxesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 
-Route::get('/', function(Request $request) {
-    $people = session('people', []);
-
-    if (count($people) == 0) {
-        return 'The room is full of people who care…';
-    } else {
-        $message = 'There ';
-        if (count($people) == 1) {
-            $message .= 'is ';
-        } else {
-            $message .= 'are ';
-        }
-
-        foreach ($people as $name) {
-            $message .= "$name, ";
-        }
-
-        $message = substr($message, 0, -2);
-
-        $message .= ' in the room';
-
-        return $message;
-    }
+Route::get('/', function () {
+    $createdBoxesCount = count(Session::get('boxes', []));
+    return view('pages.index', [ 'createdBoxesCount' => $createdBoxesCount ]);
 });
 
-Route::post('/', function (Request $request) {
-    if (!Session::has('people')) {
-        Session::put('people', []);
-    }
+Route::get('/boxes', [BoxesController::class, 'index']);
+Route::post('/boxes', [BoxesController::class, 'create']);
 
-    dump($request->input());
-    $name = $request->input('name', '');
-    if ($name) {
-        Session::push('people', $name);
-    }
-});
+Route::post('boxes/{box_name}', [BoxesController::class, 'insert']);
+Route::get('boxes/{box_name}', [BoxesController::class, 'items']);
+
