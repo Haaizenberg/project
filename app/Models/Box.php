@@ -10,4 +10,10 @@ class Box extends Model
     {
         return $this->hasMany(Item::class);
     }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

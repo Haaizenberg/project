@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Box;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Box' => 'App\Policies\BoxPolicy',
     ];
 
     /**
@@ -25,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('insert-items', function (User $user, Box $box) {
+            return $user->id === $box->user->id;
+        });
     }
 }

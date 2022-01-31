@@ -6,8 +6,19 @@
 
         <title>Project</title>
     </head>
-    <body >
+    <body>
+        @unless (Auth::check())
+            You are not signed in.
+        @endunless
+
         <p>Уже создано {{ $createdBoxesCount }} коробок.</p>
-        <a href="{{ route('boxes') }}">Boxes</a>
+        <a href="{{ route('boxes') }}">Boxes</a><br>
+
+        <a href="{{ route('registration') }}">Зарегистрироваться</a><br>
+        <a href="{{ route('login') }}">Войти</a><br>
+        
+        @if (Auth::check())
+            <a href="{{ route('logout') }}">Выйти</a>
+        @endif
     </body>
 </html>

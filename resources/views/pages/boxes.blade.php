@@ -7,6 +7,10 @@
         <title>Project</title>
     </head>
     <body>
+        @unless (Auth::check())
+            You are not signed in.
+        @endunless
+        
         @isset ($boxCreated)
             <p style="color: green">Коробка успешно создана!</p>
         @endisset

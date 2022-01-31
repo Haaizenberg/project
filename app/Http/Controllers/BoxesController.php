@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Box;
 use App\Models\Item;
+use App\Models\User;
 use App\Repositories\BoxRepository;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class BoxesController extends Controller
 {
@@ -30,7 +33,12 @@ class BoxesController extends Controller
         $newBox->color = $validated['color'];
         $newBox->name = $validated['name'];
 
-        $newBox->save();
+        if (Auth::check()) {
+            $userId = Auth::id();
+            $user = User::find($userId);
+
+            $user->boxes()->save($newBox);
+        }
         
         return redirect()->route('boxes');
     }
@@ -56,6 +64,10 @@ class BoxesController extends Controller
         
         if (! $box) {
             abort(404);
+        }
+
+        if (! Gate::allows('insert-items', [ $box ])) {
+            abort(403);
         }
         
         $validated = $request->validate([
