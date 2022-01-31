@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoxesController;
+use App\Models\Box;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -8,12 +9,11 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     $createdBoxesCount = count(Session::get('boxes', []));
-    return view('pages.index', [ 'createdBoxesCount' => $createdBoxesCount ]);
-});
+    return view('pages.index', [ 'createdBoxesCount' => Box::all()->count() ]);
+})->name('index');
 
-Route::get('/boxes', [BoxesController::class, 'index']);
-Route::post('/boxes', [BoxesController::class, 'create']);
+Route::get('/boxes', [BoxesController::class, 'index'])->name('boxes');
+Route::post('/boxes', [BoxesController::class, 'create'])->name('post-boxes');
 
-Route::post('boxes/{box_name}', [BoxesController::class, 'insert']);
-Route::get('boxes/{box_name}', [BoxesController::class, 'items']);
-
+Route::post('boxes/{box_name}', [BoxesController::class, 'insert'])->name('post-items');
+Route::get('boxes/{box_name}', [BoxesController::class, 'items'])->name('items');

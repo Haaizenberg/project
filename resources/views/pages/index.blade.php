@@ -8,6 +8,6 @@
     </head>
     <body >
         <p>Уже создано {{ $createdBoxesCount }} коробок.</p>
-        <a href="/boxes">Boxes</a>
+        <a href="{{ route('boxes') }}">Boxes</a>
     </body>
 </html>
