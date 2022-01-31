@@ -67,16 +67,13 @@ class BoxesController extends Controller
 
         $existedItem = null;
 
-        dd($box->items->collection());
-        foreach ($box->items()->collection as $item) {
-            dd($item);
+        foreach ($box->items as $item) {
             if ($item->name === $newItem->name) {
                 $existedItem = $item;
                 $existedItem->count = $existedItem->count + 1;
             }
         }
 
-        dd($existedItem);
         $box->items()->save($existedItem ?? $newItem);
 
         return redirect()->route('items', [ 'box_name' => $boxName ]);
