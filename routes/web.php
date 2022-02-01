@@ -18,7 +18,11 @@ Route::get('/', function(Request $request) {
             $message .= 'are ';
         }
 
-        foreach ($people as $name) {
+        foreach ($people as $i => $name) {
+            if ($i == count($people) - 1 &&  count($people) > 1) {
+                $message = substr($message, 0, -2);
+                $message .= ' and ';
+            }
             $message .= "$name, ";
         }
 
@@ -35,7 +39,7 @@ Route::post('/', function (Request $request) {
         Session::put('people', []);
     }
 
-    dump($request->input());
+    // dump($request->input());
     $name = $request->input('name', '');
     if ($name) {
         Session::push('people', $name);
