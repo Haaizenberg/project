@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 
 Route::get('/', function () {
-    $createdBoxesCount = count(Session::get('boxes', []));
     return view('pages.index', [ 'createdBoxesCount' => Box::all()->count() ]);
 })->name('index');
 
