@@ -11,7 +11,7 @@
             You are not signed in.
         @endunless
 
-        <p>Уже создано {{ $createdBoxesCount }} коробок.</p>
+        <p>Уже создано коробок - {{ $createdBoxesCount }}</p>
         <a href="{{ route('boxes') }}">Boxes</a><br>
 
         <a href="{{ route('registration') }}">Зарегистрироваться</a><br>
