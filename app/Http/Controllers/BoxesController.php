@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Box;
 use App\Models\Item;
+use App\Models\Member;
 use App\Models\User;
 use App\Repositories\BoxRepository;
 use Illuminate\Validation\Rule;
@@ -16,6 +17,11 @@ class BoxesController extends Controller
     //
     public function index()
     {
+        $member = Member::count();
+
+        dd($member);
+        
+
         return view('pages.boxes', [
             'boxes' => Box::all(),
         ]);
